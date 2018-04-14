@@ -1,0 +1,95 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=2]
+
+[ext_resource path="res://addons/sisilicon.vfx.lensflare/lens-dirt-default.jpeg" type="Texture" id=1]
+
+[sub_resource type="Shader" id=1]
+
+code = "shader_type spatial;
+render_mode skip_vertex_transform, unshaded, blend_add;
+
+void vertex() {
+	VERTEX = (INV_PROJECTION_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	VERTEX.z += 0.95;
+	VERTEX.xy *= 20.0;
+}
+
+uniform int ghosts = 4;
+uniform float ghost_dispersal = 0.5;
+uniform float halo_width = 0.25;
+uniform float distort = 0.25;
+
+uniform float bloom_scale = 10.0;
+uniform float bloom_bias = 0.95;
+
+uniform sampler2D lens_color;
+uniform sampler2D lens_dirt;
+
+float weight(vec2 pos) {
+	float w = length(vec2(0.5) - pos) / length(vec2(0.5));
+	return pow(1.0 - w, 5.0);
+}
+
+vec4 bloomtex(in sampler2D tex, in vec2 texcoord, in float lod) {
+	return max(vec4(0.0), texture(tex, texcoord, lod) - bloom_bias) * bloom_scale;
+}
+
+vec4 textureDistorted(in sampler2D tex, in vec2 texcoord, in vec2 direction, in vec3 distortion) {
+	return vec4(
+		bloomtex(tex, texcoord + direction * distortion.r, 2.0).r,
+		bloomtex(tex, texcoord + direction * distortion.g, 2.0).g,
+		bloomtex(tex, texcoord + direction * distortion.b, 2.0).b,
+		1.0
+	);
+}
+
+void fragment() {
+	vec2 texcoord = 1.0 - SCREEN_UV;
+	vec2 ghostVec = (vec2(0.5) - texcoord) * ghost_dispersal;
+	
+	float pixelSizeX = 1.0 / float(textureSize(SCREEN_TEXTURE, 0).x);
+	
+	vec3 distortion = vec3(-pixelSizeX * distort, 0.0, pixelSizeX * distort);
+	vec2 direction = normalize(ghostVec);
+	
+	vec3 result = vec3(0.0);
+	for(int i = 0; i < ghosts; ++i) {
+		vec2 offset = fract(texcoord + ghostVec * float(i));
+		result += textureDistorted(SCREEN_TEXTURE, offset, direction, distortion).rgb * weight(offset);
+	}
+	result *= texture(lens_color, vec2(length(vec2(0.5) - texcoord) / length(vec2(0.5)), 0)).rgb;
+	
+	
+	vec2 haloVec = normalize(ghostVec) * halo_width;
+	result += textureDistorted(SCREEN_TEXTURE, texcoord + haloVec, direction, distortion).rgb * weight(fract(texcoord + haloVec));
+	
+	ALBEDO = result * mix(texture(lens_dirt, texcoord).rgb, vec3(0.5), 0.4);
+	
+	//uncomment to debug bright point extraction
+	//COLOR = bloomtex(SCREEN_TEXTURE, SCREEN_UV, 2.0);
+}"
+
+[sub_resource type="Gradient" id=2]
+
+offsets = PoolRealArray( 0, 0.106509, 0.142012, 0.189349, 0.295858, 0.461538, 0.538462, 0.550296, 0.928994, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.65625, 1, 0.97583, 1, 1, 1, 1, 1, 0.531006, 0.78125, 0.570107, 1, 0.309998, 0.168106, 0.522199, 1, 0.261653, 0.0339813, 0.511719, 1, 0.691406, 0.108032, 0.244761, 1, 0.706731, 0.417368, 0.109337, 1, 0.774481, 0.756324, 0.309654, 1, 0.890625, 0.125, 1, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+
+flags = 4
+gradient = SubResource( 2 )
+width = 2048
+
+[resource]
+
+render_priority = 0
+shader = SubResource( 1 )
+shader_param/ghosts = 7
+shader_param/ghost_dispersal = 0.3
+shader_param/halo_width = 0.25
+shader_param/distort = 2
+shader_param/bloom_scale = 10.0
+shader_param/bloom_bias = 1.01
+shader_param/lens_color = SubResource( 3 )
+shader_param/lens_dirt = ExtResource( 1 )
+_sections_unfolded = [ "shader_param" ]
+
