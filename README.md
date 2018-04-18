@@ -9,7 +9,7 @@ Once you have enabled the plugin in your Godot project, you should add a new nod
 
 # Instructions
 
-As you may have seen in the asset store where you may have downloaded it, the plugin comes with some properties to customize the effect.
+As you may have seen in the asset store where you may have downloaded it, the plugin's node comes with some properties to customize the effect.
 
 - Flare Strength: Controls how strong the effect is.
 - Flare Bias: Controls the filtering of bright points on the screen; which determines how much of screen will be used in the lens flare effect.
