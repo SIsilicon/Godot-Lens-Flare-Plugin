@@ -19,12 +19,8 @@ func _init():
 	screen.mesh = CubeMesh.new()
 	screen.scale = Vector3(1,1,1) * pow(2.0,30);
 	add_child(screen)
-	
-	screen.material_override = preload("res://addons/sisilicon.vfx.lensflare/lens_flare_shader3D.tres")
+	screen.material_override = preload("lens-flare-shader.tres")
 	material = screen.material_override
-
-#func _ready():
-#	print(get_node('/root').get_hdr())
 
 func set_flare_strength(strength):
 	flareStrength = strength
