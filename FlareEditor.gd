@@ -2,24 +2,26 @@ extends Panel
 
 onready var lens_flare = $"../LensFlare"
 
-func _process(delta):
-	for i in $Settings.get_children():
-		match i.name:
-			"FlareStrength":
-				lens_flare.flareStrength = \
-				$Settings/FlareStrength/HSlider.value
-			"FlareBias":
-				lens_flare.flareBias = \
-				$Settings/FlareBias/HSlider.value
-			"Distortion":
-				lens_flare.distortion = \
-				$Settings/Distortion/HSlider.value
-			"GhostCount":
-				lens_flare.ghostCount = \
-				$Settings/GhostCount/HSlider.value
-			"GhostSpacing":
-				lens_flare.ghostSpacing = \
-				$Settings/GhostSpacing/HSlider.value
-			"HaloWidth":
-				lens_flare.haloWidth = \
-				$Settings/HaloWidth/HSlider.value
+func _on_FlareStrength_value_changed(value):
+	lens_flare.flareStrength = value
+
+func _on_FlareBias_value_changed(value):
+	lens_flare.flareBias = value
+
+func _on_FlareBlur_value_changed(value):
+	lens_flare.flareBlur = value
+
+func _on_Distortion_value_changed(value):
+	lens_flare.distortion = value
+
+func _on_GhostCount_value_changed(value):
+	lens_flare.ghostCount = value
+
+func _on_GhostSpacing_value_changed(value):
+	lens_flare.ghostSpacing = value
+
+func _on_HaloWidth_value_changed(value):
+	lens_flare.haloWidth = value
+
+func _on_DistortQuality_item_selected(ID):
+	lens_flare.distortionQuality = ID

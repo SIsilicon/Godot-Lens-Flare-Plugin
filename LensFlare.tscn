@@ -1,26 +1,21 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://addons/SIsilicon.vfx.lens flare/lens-flare.gd" type="Script" id=1]
 [ext_resource path="res://addons/SIsilicon.vfx.lens flare/lens_flare_icon.png" type="Texture" id=2]
-[ext_resource path="res://addons/SIsilicon.vfx.lens flare/lens-dirt-default.jpeg" type="Texture" id=3]
-[ext_resource path="res://CamControl.gd" type="Script" id=4]
-[ext_resource path="res://FlareEditor.gd" type="Script" id=5]
+[ext_resource path="res://CamControl.gd" type="Script" id=3]
+[ext_resource path="res://FlareEditor.gd" type="Script" id=4]
+[ext_resource path="res://Slider.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Square.ttf" type="DynamicFontData" id=6]
 
-[sub_resource type="DynamicFont" id=2]
-
+[sub_resource type="DynamicFont" id=1]
 size = 20
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 6 )
-_sections_unfolded = [ "Resource", "Settings" ]
 
-[sub_resource type="Animation" id=3]
-
+[sub_resource type="Animation" id=2]
 resource_name = "instruction"
 length = 4.0
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:custom_colors/font_color")
 tracks/0/interp = 1
@@ -46,514 +41,156 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 578 ), Vector2( 0, 578 ), Vector2( 0, 700 ) ]
 }
 
-[node name="Main" type="Node" index="0"]
+[sub_resource type="ProceduralSky" id=3]
+ground_energy = 0.5
+sun_angle_max = 24.52
+sun_energy = 16.0
 
-[node name="LensFlare" type="Node" parent="." index="0"]
+[sub_resource type="Environment" id=4]
+background_mode = 2
+background_sky = SubResource( 3 )
+tonemap_mode = 1
+auto_exposure_enabled = true
+adjustment_brightness = 0.67
+adjustment_contrast = 1.91
 
+[node name="Main" type="Node"]
+
+[node name="LensFlare" type="Node" parent="."]
 script = ExtResource( 1 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
-flareStrength = 10.0
-flareBias = 1.05
-distortion = 2
-ghostCount = 7
-ghostSpacing = 0.3
-haloWidth = 0.25
-lensDirt = ExtResource( 3 )
+flareStrength = 0.41
+flareBias = 3.644
+distortionQuality = 1
+distortion = 4.28
+ghostSpacing = 0.307
+haloWidth = 0.253
 
-[node name="CameraBase" type="Position3D" parent="." index="1"]
+[node name="CameraBase" type="Position3D" parent="."]
 
-[node name="Camera" type="Camera" parent="CameraBase" index="0"]
-
+[node name="Camera" type="Camera" parent="CameraBase"]
 transform = Transform( 0.990683, 0.0787858, 0.111085, -0.00953811, 0.853812, -0.520493, -0.135853, 0.514584, 0.846609, 0.140886, -0.660126, 1.07524 )
-keep_aspect = 1
-cull_mask = 1048575
-environment = null
-h_offset = 0.0
-v_offset = 0.0
-doppler_tracking = 0
-projection = 0
-current = false
-fov = 70.0
-size = 1.0
-near = 0.05
-far = 100.0
+script = ExtResource( 3 )
+camera_speed = 2.17
+
+[node name="Panel" type="Panel" parent="."]
+editor/display_folded = true
+anchor_bottom = 1.0
+margin_right = 299.0
+margin_bottom = -423.0
+rect_min_size = Vector2( 240, 0 )
 script = ExtResource( 4 )
 
-[node name="Panel" type="Panel" parent="." index="2"]
-
+[node name="Settings" type="VBoxContainer" parent="Panel"]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 240.0
-margin_bottom = -463.0
-rect_min_size = Vector2( 240, 0 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-script = ExtResource( 5 )
-_sections_unfolded = [ "Rect", "Size Flags" ]
-
-[node name="Settings" type="VBoxContainer" parent="Panel" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 1.0
-margin_left = 20.0
-margin_top = 10.0
-margin_right = 200.0
+margin_left = 10.0
+margin_top = 7.0
+margin_right = -10.0
 margin_bottom = -10.0
 rect_min_size = Vector2( 200, 0 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
-_sections_unfolded = [ "Margin", "Rect" ]
 
-[node name="FlareStrength" type="HBoxContainer" parent="Panel/Settings" index="0"]
-
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 200.0
-margin_bottom = 16.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
-
-[node name="Label" type="Label" parent="Panel/Settings/FlareStrength" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 1.0
-margin_right = 88.0
-margin_bottom = 15.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
+[node name="FlareStrength" parent="Panel/Settings" instance=ExtResource( 5 )]
+margin_right = 279.0
 text = "Flare Strength"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="HSlider" type="HSlider" parent="Panel/Settings/FlareStrength" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 92.0
-margin_right = 200.0
-margin_bottom = 16.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 3
-size_flags_vertical = 0
-min_value = 0.0
-max_value = 20.0
-step = 0.1
-page = 0.0
-value = 10.0
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 0
-ticks_on_borders = false
-focus_mode = 2
-
-[node name="FlareBias" type="HBoxContainer" parent="Panel/Settings" index="1"]
-
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 20.0
-margin_right = 200.0
-margin_bottom = 36.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
-
-[node name="Label" type="Label" parent="Panel/Settings/FlareBias" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 1.0
-margin_right = 62.0
-margin_bottom = 15.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "Flare Bias"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="HSlider" type="HSlider" parent="Panel/Settings/FlareBias" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 66.0
-margin_right = 200.0
-margin_bottom = 16.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 3
-size_flags_vertical = 0
-min_value = 0.0
-max_value = 2.0
-step = 0.01
-page = 0.0
+max_value = 3.0
 value = 1.0
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 0
-ticks_on_borders = false
-focus_mode = 2
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="Distortion" type="HBoxContainer" parent="Panel/Settings" index="2"]
-
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 40.0
-margin_right = 200.0
-margin_bottom = 56.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
-
-[node name="Label" type="Label" parent="Panel/Settings/Distortion" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 1.0
-margin_right = 64.0
-margin_bottom = 15.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "Distortion"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="HSlider" type="HSlider" parent="Panel/Settings/Distortion" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 68.0
-margin_right = 200.0
-margin_bottom = 16.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 3
-size_flags_vertical = 0
-min_value = 0.0
-max_value = 16.0
-step = 0.001
-page = 0.0
-value = 2.0
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 0
-ticks_on_borders = false
-focus_mode = 2
-_sections_unfolded = [ "Size Flags" ]
-
-[node name="GhostCount" type="HBoxContainer" parent="Panel/Settings" index="3"]
-
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 60.0
-margin_right = 200.0
-margin_bottom = 76.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
-
-[node name="Label" type="Label" parent="Panel/Settings/GhostCount" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 1.0
-margin_right = 79.0
-margin_bottom = 15.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "Ghost Count"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="HSlider" type="HSlider" parent="Panel/Settings/GhostCount" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 83.0
-margin_right = 200.0
-margin_bottom = 16.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 3
-size_flags_vertical = 0
-min_value = 0.0
+[node name="FlareBias" parent="Panel/Settings" instance=ExtResource( 5 )]
+margin_top = 20.0
+margin_right = 279.0
+margin_bottom = 36.0
+text = "Flare Bias"
 max_value = 20.0
-step = 1.0
-page = 0.0
-value = 7.0
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 0
-ticks_on_borders = false
-focus_mode = 2
-_sections_unfolded = [ "Size Flags" ]
+value = 8.0
 
-[node name="GhostSpacing" type="HBoxContainer" parent="Panel/Settings" index="4"]
+[node name="FlareBlur" parent="Panel/Settings" instance=ExtResource( 5 )]
+margin_top = 40.0
+margin_right = 279.0
+margin_bottom = 56.0
+text = "Flare Blur"
+max_value = 8.0
+value = 1.0
 
+[node name="Distortion" parent="Panel/Settings" instance=ExtResource( 5 )]
+margin_top = 60.0
+margin_right = 279.0
+margin_bottom = 76.0
+text = "Distortion"
+max_value = 50.0
+value = 10.0
+
+[node name="DistortQuality" type="HBoxContainer" parent="Panel/Settings"]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_top = 80.0
-margin_right = 200.0
-margin_bottom = 96.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
+margin_right = 279.0
+margin_bottom = 100.0
 
-[node name="Label" type="Label" parent="Panel/Settings/GhostSpacing" index="0"]
+[node name="Label" type="Label" parent="Panel/Settings/DistortQuality"]
+margin_top = 3.0
+margin_right = 122.0
+margin_bottom = 17.0
+text = "Distortion Quality: "
 
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 1.0
-margin_right = 90.0
-margin_bottom = 15.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
+[node name="OptionButton" type="OptionButton" parent="Panel/Settings/DistortQuality"]
+margin_left = 126.0
+margin_right = 279.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Low"
+items = [ "Low", null, false, 0, null, "Medium", null, false, 1, null, "High", null, false, 2, null ]
+selected = 0
+
+[node name="GhostCount" parent="Panel/Settings" instance=ExtResource( 5 )]
+margin_top = 104.0
+margin_right = 279.0
+margin_bottom = 120.0
+text = "Ghost Count"
+max_value = 20.0
+value = 7.0
+
+[node name="GhostSpacing" parent="Panel/Settings" instance=ExtResource( 5 )]
+margin_top = 124.0
+margin_right = 279.0
+margin_bottom = 140.0
 text = "Ghost Spacing"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="HSlider" type="HSlider" parent="Panel/Settings/GhostSpacing" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 94.0
-margin_right = 200.0
-margin_bottom = 16.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 3
-size_flags_vertical = 0
-min_value = 0.0
-max_value = 1.0
-step = 0.001
-page = 0.0
 value = 0.3
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 0
-ticks_on_borders = false
-focus_mode = 2
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="HaloWidth" type="HBoxContainer" parent="Panel/Settings" index="5"]
-
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 100.0
-margin_right = 200.0
-margin_bottom = 116.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
-
-[node name="Label" type="Label" parent="Panel/Settings/HaloWidth" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 1.0
-margin_right = 71.0
-margin_bottom = 15.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
+[node name="HaloWidth" parent="Panel/Settings" instance=ExtResource( 5 )]
+margin_top = 144.0
+margin_right = 279.0
+margin_bottom = 160.0
 text = "Halo Width"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
+value = 0.54
 
-[node name="HSlider" type="HSlider" parent="Panel/Settings/HaloWidth" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 75.0
-margin_right = 200.0
-margin_bottom = 16.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 3
-size_flags_vertical = 0
-min_value = 0.0
-max_value = 1.0
-step = 0.001
-page = 0.0
-value = 0.25
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 0
-ticks_on_borders = false
-focus_mode = 2
-_sections_unfolded = [ "Size Flags" ]
-
-[node name="LookAround" type="Label" parent="." index="3"]
-
+[node name="LookAround" type="Label" parent="."]
 editor/display_folded = true
-anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 51.0
 margin_bottom = 73.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_as_outline = 1
-text = "You may look around with the arrow keys"
+text = "You may look around with the WASD keys"
 align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_colors", "custom_constants", "custom_fonts" ]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="LookAround" index="0"]
-
-root_node = NodePath("..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LookAround"]
 autoplay = "instruction"
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
-anims/instruction = SubResource( 3 )
-blend_times = [  ]
+anims/instruction = SubResource( 2 )
 
-
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 4 )
+[connection signal="value_changed" from="Panel/Settings/FlareStrength" to="Panel" method="_on_FlareStrength_value_changed"]
+[connection signal="value_changed" from="Panel/Settings/FlareBias" to="Panel" method="_on_FlareBias_value_changed"]
+[connection signal="value_changed" from="Panel/Settings/FlareBlur" to="Panel" method="_on_FlareBlur_value_changed"]
+[connection signal="value_changed" from="Panel/Settings/Distortion" to="Panel" method="_on_Distortion_value_changed"]
+[connection signal="item_selected" from="Panel/Settings/DistortQuality/OptionButton" to="Panel" method="_on_DistortQuality_item_selected"]
+[connection signal="value_changed" from="Panel/Settings/GhostCount" to="Panel" method="_on_GhostCount_value_changed"]
+[connection signal="value_changed" from="Panel/Settings/GhostSpacing" to="Panel" method="_on_GhostSpacing_value_changed"]
+[connection signal="value_changed" from="Panel/Settings/HaloWidth" to="Panel" method="_on_HaloWidth_value_changed"]

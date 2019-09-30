@@ -2,22 +2,24 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/lens-dirt-default.jpeg-828e5aa76d932e6bcde673258028877b.s3tc.stex"
-path.etc2="res://.import/lens-dirt-default.jpeg-828e5aa76d932e6bcde673258028877b.etc2.stex"
+path.s3tc="res://.import/lens-dirt-default.jpeg-a62a38d2886058134e76bf727c9a6764.s3tc.stex"
+path.etc2="res://.import/lens-dirt-default.jpeg-a62a38d2886058134e76bf727c9a6764.etc2.stex"
+metadata={
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
+}
 
 [deps]
 
-source_file="res://addons/sisilicon.vfx.lensflare/lens-dirt-default.jpeg"
-source_md5="84e6c648d6fa7d35db61ec89e3e8664e"
-
-dest_files=[ "res://.import/lens-dirt-default.jpeg-828e5aa76d932e6bcde673258028877b.s3tc.stex", "res://.import/lens-dirt-default.jpeg-828e5aa76d932e6bcde673258028877b.etc2.stex" ]
-dest_md5="75d09501ecbfac0e4ee06ba90fd15d2c"
+source_file="res://addons/SIsilicon.vfx.lens flare/lens-dirt-default.jpeg"
+dest_files=[ "res://.import/lens-dirt-default.jpeg-a62a38d2886058134e76bf727c9a6764.s3tc.stex", "res://.import/lens-dirt-default.jpeg-a62a38d2886058134e76bf727c9a6764.etc2.stex" ]
 
 [params]
 
 compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=true
 flags/filter=true
@@ -27,6 +29,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=false
