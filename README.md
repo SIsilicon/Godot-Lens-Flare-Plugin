@@ -1,6 +1,6 @@
 # Godot-Lens-Flare-Plugin
 
-Hello and thank you for using the Godot Lens Flare Plugin for Godot 3.0.
+Hello and thank you for using the Lens Flare Plugin for Godot 3.1.
 
 # Installation
 
@@ -13,7 +13,9 @@ As you may have seen in the asset store where you may have downloaded it, the pl
 
 - Flare Strength: Controls how strong the effect is.
 - Flare Bias: Controls the filtering of bright points on the screen; which determines how much of screen will be used in the lens flare effect.
+- Flare Blur: Sort of softens the flares. The flare bias should be reduced when increasing this.
 - Distortion: Controls how much colour distortion is made on the flares.
+- Distortion Quality: Determines the quality of the distortion.
 - Ghost Count: Controls how many "ghosts" appear on the screen.
 - Ghost Spacing: Controls the distance between ghosts.
 - Halo Width: Controls the radius of the halo.
