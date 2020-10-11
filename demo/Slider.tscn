@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Slider.gd" type="Script" id=1]
+[ext_resource path="res://demo/Slider.gd" type="Script" id=1]
+
 
 [node name="Slider" type="HBoxContainer"]
 margin_right = 180.0

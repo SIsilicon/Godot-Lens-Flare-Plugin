@@ -2,10 +2,10 @@
 
 [ext_resource path="res://addons/SIsilicon.vfx.lens flare/lens-flare.gd" type="Script" id=1]
 [ext_resource path="res://addons/SIsilicon.vfx.lens flare/lens_flare_icon.png" type="Texture" id=2]
-[ext_resource path="res://CamControl.gd" type="Script" id=3]
-[ext_resource path="res://FlareEditor.gd" type="Script" id=4]
-[ext_resource path="res://Slider.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Square.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://demo/CamControl.gd" type="Script" id=3]
+[ext_resource path="res://demo/FlareEditor.gd" type="Script" id=4]
+[ext_resource path="res://demo/Slider.tscn" type="PackedScene" id=5]
+[ext_resource path="res://demo/Square.ttf" type="DynamicFontData" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 20
@@ -14,7 +14,6 @@ use_filter = true
 font_data = ExtResource( 6 )
 
 [sub_resource type="Animation" id=2]
-resource_name = "instruction"
 length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:custom_colors/font_color")
@@ -50,23 +49,22 @@ sun_energy = 16.0
 background_mode = 2
 background_sky = SubResource( 3 )
 tonemap_mode = 1
-auto_exposure_enabled = true
+tonemap_exposure = 0.48
 adjustment_brightness = 0.67
 adjustment_contrast = 1.91
 
-[node name="Main" type="Node"]
+[node name="Main" type="Spatial"]
 
 [node name="LensFlare" type="Node" parent="."]
 script = ExtResource( 1 )
 __meta__ = {
 "_editor_icon": ExtResource( 2 )
 }
-flareStrength = 0.41
-flareBias = 3.644
-distortionQuality = 1
-distortion = 4.28
-ghostSpacing = 0.307
-haloWidth = 0.253
+flare_strength = 0.25
+flare_bias = 4.0
+distortion = 7.0
+ghost_spacing = 0.35
+halo_width = 0.4
 
 [node name="CameraBase" type="Position3D" parent="."]
 
@@ -76,15 +74,16 @@ script = ExtResource( 3 )
 camera_speed = 2.17
 
 [node name="Panel" type="Panel" parent="."]
-editor/display_folded = true
 anchor_bottom = 1.0
 margin_right = 299.0
-margin_bottom = -423.0
+margin_bottom = -396.0
 rect_min_size = Vector2( 240, 0 )
 script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Settings" type="VBoxContainer" parent="Panel"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -92,42 +91,47 @@ margin_top = 7.0
 margin_right = -10.0
 margin_bottom = -10.0
 rect_min_size = Vector2( 200, 0 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="FlareStrength" parent="Panel/Settings" instance=ExtResource( 5 )]
+margin_top = 3.0
 margin_right = 279.0
+margin_bottom = 19.0
 text = "Flare Strength"
 max_value = 3.0
-value = 1.0
+value = 0.25
 
 [node name="FlareBias" parent="Panel/Settings" instance=ExtResource( 5 )]
-margin_top = 20.0
+margin_top = 23.0
 margin_right = 279.0
-margin_bottom = 36.0
+margin_bottom = 39.0
 text = "Flare Bias"
 max_value = 20.0
-value = 8.0
+value = 4.0
 
 [node name="FlareBlur" parent="Panel/Settings" instance=ExtResource( 5 )]
-margin_top = 40.0
+margin_top = 43.0
 margin_right = 279.0
-margin_bottom = 56.0
+margin_bottom = 59.0
 text = "Flare Blur"
 max_value = 8.0
-value = 1.0
+value = 2.0
 
 [node name="Distortion" parent="Panel/Settings" instance=ExtResource( 5 )]
-margin_top = 60.0
+margin_top = 63.0
 margin_right = 279.0
-margin_bottom = 76.0
+margin_bottom = 79.0
 text = "Distortion"
 max_value = 50.0
-value = 10.0
+value = 7.0
 
 [node name="DistortQuality" type="HBoxContainer" parent="Panel/Settings"]
-editor/display_folded = true
-margin_top = 80.0
+margin_top = 83.0
 margin_right = 279.0
-margin_bottom = 100.0
+margin_bottom = 103.0
 
 [node name="Label" type="Label" parent="Panel/Settings/DistortQuality"]
 margin_top = 3.0
@@ -145,40 +149,48 @@ items = [ "Low", null, false, 0, null, "Medium", null, false, 1, null, "High", n
 selected = 0
 
 [node name="GhostCount" parent="Panel/Settings" instance=ExtResource( 5 )]
-margin_top = 104.0
+margin_top = 107.0
 margin_right = 279.0
-margin_bottom = 120.0
+margin_bottom = 123.0
 text = "Ghost Count"
 max_value = 20.0
 value = 7.0
 
 [node name="GhostSpacing" parent="Panel/Settings" instance=ExtResource( 5 )]
-margin_top = 124.0
+margin_top = 127.0
 margin_right = 279.0
-margin_bottom = 140.0
+margin_bottom = 143.0
 text = "Ghost Spacing"
-value = 0.3
+value = 0.35
 
 [node name="HaloWidth" parent="Panel/Settings" instance=ExtResource( 5 )]
-margin_top = 144.0
+margin_top = 147.0
 margin_right = 279.0
-margin_bottom = 160.0
+margin_bottom = 163.0
 text = "Halo Width"
-value = 0.54
+value = 0.4
+
+[node name="StreakStrength" parent="Panel/Settings" instance=ExtResource( 5 )]
+margin_top = 167.0
+margin_right = 279.0
+margin_bottom = 183.0
+text = "Streak Strength"
+value = 0.5
 
 [node name="LookAround" type="Label" parent="."]
-editor/display_folded = true
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 51.0
-margin_bottom = 73.0
+margin_top = -22.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_as_outline = 1
 text = "You may look around with the WASD keys"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="LookAround"]
 autoplay = "instruction"
@@ -194,3 +206,4 @@ environment = SubResource( 4 )
 [connection signal="value_changed" from="Panel/Settings/GhostCount" to="Panel" method="_on_GhostCount_value_changed"]
 [connection signal="value_changed" from="Panel/Settings/GhostSpacing" to="Panel" method="_on_GhostSpacing_value_changed"]
 [connection signal="value_changed" from="Panel/Settings/HaloWidth" to="Panel" method="_on_HaloWidth_value_changed"]
+[connection signal="value_changed" from="Panel/Settings/StreakStrength" to="Panel" method="_on_StreakStrength_value_changed"]

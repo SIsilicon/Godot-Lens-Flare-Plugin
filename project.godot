@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Lens Flare Demo"
-run/main_scene="res://LensFlare.tscn"
+run/main_scene="res://demo/LensFlare.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
@@ -25,4 +25,4 @@ enabled=PoolStringArray( "SIsilicon.vfx.lens flare" )
 
 [rendering]
 
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://demo/default_env.tres"
