@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://addons/SIsilicon.vfx.lens flare/lens-flare.gd" type="Script" id=1]
-[ext_resource path="res://addons/SIsilicon.vfx.lens flare/lens_flare_icon.png" type="Texture" id=2]
+[ext_resource path="res://addons/silicon.vfx.lens_flare/lens_flare.gd" type="Script" id=1]
+[ext_resource path="res://addons/silicon.vfx.lens_flare/lens_dirt_default.jpeg" type="Texture" id=2]
 [ext_resource path="res://demo/CamControl.gd" type="Script" id=3]
 [ext_resource path="res://demo/FlareEditor.gd" type="Script" id=4]
 [ext_resource path="res://demo/Slider.tscn" type="PackedScene" id=5]
@@ -57,14 +57,16 @@ adjustment_contrast = 1.91
 
 [node name="LensFlare" type="Node" parent="."]
 script = ExtResource( 1 )
-__meta__ = {
-"_editor_icon": ExtResource( 2 )
-}
-flare_strength = 0.25
+flare_strength = 0.8
 flare_bias = 4.0
+flare_blur = 2.0
+distortion_quality = 0
 distortion = 7.0
+ghost_count = 7
 ghost_spacing = 0.35
 halo_width = 0.4
+streak_strength = 0.5
+lens_dirt = ExtResource( 2 )
 
 [node name="CameraBase" type="Position3D" parent="."]
 
@@ -102,7 +104,7 @@ margin_right = 279.0
 margin_bottom = 19.0
 text = "Flare Strength"
 max_value = 3.0
-value = 0.25
+value = 0.8
 
 [node name="FlareBias" parent="Panel/Settings" instance=ExtResource( 5 )]
 margin_top = 23.0

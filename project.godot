@@ -16,12 +16,14 @@ _global_script_class_icons={
 [application]
 
 config/name="Lens Flare Demo"
+config/description="A demo featuring the lens flare node.
+The node creates a lens flare effect using brights points in the screen, so an HDR viewport is advised."
 run/main_scene="res://demo/LensFlare.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "SIsilicon.vfx.lens flare" )
+enabled=PoolStringArray( "silicon.vfx.lens_flare" )
 
 [rendering]
 

@@ -1,7 +1,5 @@
 [gd_resource type="ShaderMaterial" load_steps=7 format=2]
 
-[ext_resource path="res://addons/SIsilicon.vfx.lens flare/lens-dirt-default.jpeg" type="Texture" id=1]
-
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
 render_mode skip_vertex_transform, unshaded, blend_add;
@@ -107,12 +105,16 @@ colors = PoolColorArray( 0.774481, 0.756324, 0.309654, 1, 0.890625, 0.125, 1, 1 
 [sub_resource type="GradientTexture" id=3]
 gradient = SubResource( 2 )
 
-[sub_resource type="OpenSimplexNoise" id=4]
+[sub_resource type="StreamTexture" id=4]
+flags = 7
+load_path = "res://.import/lens-dirt-default.jpeg-a47be4e549a2d4d64a521d77c972c593.s3tc.stex"
+
+[sub_resource type="OpenSimplexNoise" id=5]
 period = 2.0
 
-[sub_resource type="NoiseTexture" id=5]
+[sub_resource type="NoiseTexture" id=6]
 height = 1
-noise = SubResource( 4 )
+noise = SubResource( 5 )
 
 [resource]
 shader = SubResource( 1 )
@@ -127,5 +129,5 @@ shader_param/bloom_bias = 7.295
 shader_param/streak_strength = 1.0
 shader_param/distortion_quality = null
 shader_param/lens_color = SubResource( 3 )
-shader_param/lens_dirt = ExtResource( 1 )
-shader_param/starburst = SubResource( 5 )
+shader_param/lens_dirt = SubResource( 4 )
+shader_param/starburst = SubResource( 6 )

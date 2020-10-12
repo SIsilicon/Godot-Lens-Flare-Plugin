@@ -1,23 +1,42 @@
 tool
 extends Node
 
-export(float, 0, 100) var flare_strength := 10.0 setget set_flare_strength
-export(float, 0, 16) var flare_bias := 1.05 setget set_flare_bias
-export(float, 0, 10) var flare_blur := 2.0 setget set_flare_blur;
+## Exported variables
+var flare_strength := 1.0 setget set_flare_strength
+var flare_bias := 1.05 setget set_flare_bias
+var flare_blur := 2.0 setget set_flare_blur;
 
-export(int, "Low", "Medium", "High") var distortion_quality := 0 setget set_distortion_quality;
-export(float, 0, 50) var distortion := 2.0 setget set_flare_distortion
+var distortion_quality := 0 setget set_distortion_quality;
+var distortion := 2.0 setget set_flare_distortion
 
-export(int, 0.01, 100) var ghost_count := 7 setget set_ghost_count
-export(float, 0, 1) var ghost_spacing := 0.3 setget set_ghost_spacing
-export(float, 0, 1) var halo_width := 0.25 setget set_halo_width
+var ghost_count := 7 setget set_ghost_count
+var ghost_spacing := 0.3 setget set_ghost_spacing
+var halo_width := 0.25 setget set_halo_width
 
-export(float, 0, 1) var streak_strength := 0.5 setget set_streak_strength
-
-export(Texture) var lens_dirt = preload("lens-dirt-default.jpeg") setget set_lens_dirt
+var streak_strength := 0.5 setget set_streak_strength
+var lens_dirt = preload("lens_dirt_default.jpeg") setget set_lens_dirt
+## Exported variables
 
 var screen := MeshInstance.new()
-var material := preload("lens-flare-shader.tres").duplicate()
+var material := preload("lens_flare_shader.tres").duplicate()
+
+
+func _get_property_list() -> Array:
+	var properties := [
+		{name="LensFlare", type=TYPE_NIL, usage=PROPERTY_USAGE_CATEGORY},
+		{name="flare_strength", type=TYPE_REAL, hint=PROPERTY_HINT_RANGE, hint_string="0,16"},
+		{name="flare_bias", type=TYPE_REAL, hint=PROPERTY_HINT_RANGE, hint_string="0,16"},
+		{name="flare_blur", type=TYPE_REAL, hint=PROPERTY_HINT_RANGE, hint_string="0,10"},
+		{name="distortion_quality", type=TYPE_INT, hint=PROPERTY_HINT_ENUM, hint_string="Low,Medium,High"},
+		{name="distortion", type=TYPE_REAL, hint=PROPERTY_HINT_RANGE, hint_string="0,50"},
+		{name="ghost_count", type=TYPE_INT, hint=PROPERTY_HINT_RANGE, hint_string="0,20"},
+		{name="ghost_spacing", type=TYPE_REAL, hint=PROPERTY_HINT_RANGE, hint_string="0,1"},
+		{name="halo_width", type=TYPE_REAL, hint=PROPERTY_HINT_RANGE, hint_string="0,1"},
+		{name="streak_strength", type=TYPE_REAL, hint=PROPERTY_HINT_RANGE, hint_string="0,1"},
+		{name="lens_dirt", type=TYPE_OBJECT, hint=PROPERTY_HINT_RESOURCE_TYPE, hint_string="Texture"},
+	]
+	
+	return properties
 
 
 func _init() -> void:
@@ -25,7 +44,9 @@ func _init() -> void:
 	screen.scale = Vector3(1,1,1) * pow(2.0,30);
 	add_child(screen)
 	screen.material_override = material
-	
+
+
+func _enter_tree() -> void:
 	set_flare_strength(flare_strength)
 	set_flare_bias(flare_bias)
 	set_flare_distortion(distortion)
